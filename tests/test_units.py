@@ -14,6 +14,10 @@ class TestUnits:
     def test_swap_enter_to_sapce(self):
         unit = collapse_spaces()
         assert unit.process("test    case") == "test case"
+        
+    def test_remove_latin(self):
+        unit = remove_latin()
+        assert unit.process("Переменные могут быть categorical или continious") == "Переменные могут быть  или "
 
 
 def test_conv():

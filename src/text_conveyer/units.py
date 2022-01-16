@@ -46,3 +46,10 @@ class strip_string(ProcessUnit):
     
     def __str__(self):
         return "strip_string"
+    
+class remove_latin(ProcessUnit):
+    def process(self, text:str) -> str:
+        return re.sub("[A-Za-z]+", '', text)
+    
+    def __str__(self):
+        return "remove_latin"

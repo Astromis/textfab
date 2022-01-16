@@ -1,4 +1,4 @@
-import text_conveyer.units as units
+from . import units
 from multiprocessing import Pool
 
 class Conveyer:
