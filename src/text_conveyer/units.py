@@ -53,3 +53,10 @@ class remove_latin(ProcessUnit):
     
     def __str__(self):
         return "remove_latin"
+    
+class remove_non_cyrillic(ProcessUnit):
+    def process(self, text:str) -> str:
+        return re.sub("[^А-Яа-я \-\,\.\;\:]+", '', text)
+    
+    def __str__(self):
+        return "remove_non_cyrillic"
