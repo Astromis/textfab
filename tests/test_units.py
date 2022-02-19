@@ -31,6 +31,10 @@ def test_parralel_conv():
     assert conv.start(["This text, is\n\n for test", "This another text, is\n\n for test", "This yet another text, is\n\n for test"], pool_size=5) == ["This text is for test", "This another text is for test", "This yet another text is for test"]
 
 
-    def test_remove_non_cyrillic(self):
-        unit = remove_non_cyrillic()
-        assert unit.process("Теst #2 для renive не cyrillic") == "Те  для  не "
+def test_remove_non_cyrillic(self):
+    unit = remove_non_cyrillic()
+    assert unit.process("Теst #2 для renive не cyrillic") == "Те  для  не "
+
+def remove_custom_regex(self):
+    unit = remove_custom_regex(["[0-9]+"])
+    assert unit.process("This is 1st text since 1343 . It contains 323 signs") == "This is st text since  . It contains  signs"

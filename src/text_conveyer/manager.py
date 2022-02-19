@@ -4,8 +4,15 @@ from multiprocessing import Pool
 class Conveyer:
     def __init__(self, config:list):
         self.conveyer = []
+        if not isinstance(config, list):
+            raise ValueError("The config is not a list")
         for u in config:
-            self.conveyer.append(getattr(units, u)())
+            if isinstance(u, str):
+                self.conveyer.append(getattr(units, u)())
+            elif isinstance(u, tuple):
+                self.conveyer.append(getattr(units, u[0])(*u[1:]))
+            else:
+                raise ValueError("Unknown type of unit")
 
     def _process(self, text:str):
         for u in self.conveyer:
@@ -13,7 +20,7 @@ class Conveyer:
             text = u.process(text)
         return text
     
-    def start(self, texts, pool_size=None):
+    def start(self, texts:list, pool_size=None):
         if pool_size != None:
             with Pool(pool_size) as p:
                 return p.map(self._process, texts)

@@ -12,6 +12,12 @@ class ProcessUnit(metaclass=ABCMeta):
     def __str__(self):
         pass
 
+class ParamProcessUnit(ProcessUnit):
+    
+    def __init__(self, param) -> None:
+        super().__init__()
+        self.param = param
+
 class remove_punct(ProcessUnit):
     def process(self, text: str) -> str:
         return ''.join([x for x in text if x not in punctuation])
@@ -60,3 +66,13 @@ class remove_non_cyrillic(ProcessUnit):
     
     def __str__(self):
         return "remove_non_cyrillic"
+
+class remove_custom_regex(ParamProcessUnit):
+    
+    def process(self, text: str) -> str:
+        if len(self.param) > 1:
+            raise ValueError(f"Too many parameterfs for {self.__str__()} unit")
+        return re.sub(*self.param, "", text)
+
+    def __str__(self):
+        return "remove_custom_regex"
