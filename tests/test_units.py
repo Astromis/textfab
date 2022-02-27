@@ -38,3 +38,7 @@ def test_remove_non_cyrillic(self):
 def remove_custom_regex(self):
     unit = remove_custom_regex(["[0-9]+"])
     assert unit.process("This is 1st text since 1343 . It contains 323 signs") == "This is st text since  . It contains  signs"
+
+def lemmatize_by_mystem(self):
+    unit = lemmatize_by_mystem()
+    assert unit.process("Красивая мама красиво мыла раму") == ['красивый', ' ', 'мама', ' ', 'красиво', ' ', 'мыть', ' ', 'рама', '\n']

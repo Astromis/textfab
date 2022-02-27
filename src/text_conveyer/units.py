@@ -1,6 +1,7 @@
 from abc import abstractmethod, ABCMeta
 from string import punctuation 
 import re
+from pymystem3 import Mystem
 
 class ProcessUnit(metaclass=ABCMeta):
     
@@ -75,4 +76,14 @@ class remove_custom_regex(ParamProcessUnit):
         return re.sub(*self.param, "", text)
 
     def __str__(self):
-        return "remove_custom_regex"
+        return f"remove_custom_regex:{self.param}"
+
+class lemmatize_by_mystem(ProcessUnit):
+    def __init__(self) -> None:
+        self.stemmer = Mystem()
+
+    def process(self, text: str) -> str:
+        return " ".join(self.stemmer.lemmatize(text))
+
+    def __str__(self):
+        return "lemmatize_by_mystem"
