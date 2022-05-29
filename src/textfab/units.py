@@ -1,24 +1,11 @@
-from abc import abstractmethod, ABCMeta
-from string import punctuation 
 import re
-from pymystem3 import Mystem
 import unicodedata
 
-class ProcessUnit(metaclass=ABCMeta):
-    
-    @abstractmethod
-    def process(self, text:str) -> str:
-        pass
+from string import punctuation 
+from pymystem3 import Mystem
 
-    @classmethod
-    def __str__(self):
-        pass
-
-class ParamProcessUnit(ProcessUnit):
-    
-    def __init__(self, param) -> None:
-        super().__init__()
-        self.param = param
+from .base import ProcessUnit
+from .base import ParamProcessUnit
 
 class remove_punct(ProcessUnit):
     def process(self, text: str) -> str:
