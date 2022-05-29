@@ -2,6 +2,7 @@ from abc import abstractmethod, ABCMeta
 from string import punctuation 
 import re
 from pymystem3 import Mystem
+import unicodedata
 
 class ProcessUnit(metaclass=ABCMeta):
     
@@ -83,7 +84,32 @@ class lemmatize_by_mystem(ProcessUnit):
         self.stemmer = Mystem()
 
     def process(self, text: str) -> str:
-        return " ".join(self.stemmer.lemmatize(text))
+        return "".join(self.stemmer.lemmatize(text))
 
     def __str__(self):
         return "lemmatize_by_mystem"
+
+class remove_emoji(ProcessUnit):
+    def __init__(self):
+        self.emoji_pattern = re.compile(u"(["                 # .* removed
+                                    u"\U00010000-\U0001FFFF"
+                                    u"\U0000200D"
+                                    #u"\U0001F600-\U0001F64F"  # emoticons
+                                    #u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                                    #u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                                    #u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                                    "])", flags= re.UNICODE)
+    
+    def process(self, text: str) -> str:
+        
+        return re.sub(self.emoji_pattern, '', text)
+
+    def __str__(self):
+        return "remove_emoji"
+
+class remove_accents(ProcessUnit):
+    def process(self, text: str) -> str:
+        return ''.join(c for c in unicodedata.normalize('NFD', text)
+                    if unicodedata.category(c) != 'Mn')
+    def __str__(self):
+        return "remove_accents"

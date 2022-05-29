@@ -4,16 +4,16 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="text-conveyer-astromis",
-    version="0.0.1",
+    name="textfab",
+    version="0.1.0",
     author="Igor Buyanov",
     author_email="buyanov.igor.o@yandex.ru",
-    description="A small example package",
+    description="A tiny library for text preprocessing in NLP",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Astromis/preprocess_conveyer",
+    url="https://github.com/Astromis/textfab",
     project_urls={
-        "Bug Tracker": "https://github.com/Astromis/preprocess_conveyer/issues",
+        "Bug Tracker": "https://github.com/Astromis/textfab/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -22,4 +22,8 @@ setuptools.setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
+    install_requires=[
+        'pymystem3==0.2.0'
+    ],
+    include_package_data=True,
 )

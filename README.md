@@ -1,9 +1,9 @@
-# preprocess_conveyer
+# Textfab
 
 
-A tiny library for personal usage. I really tired rewriting all functions each time when I need to preprocess some text. Ridicilous thing is that when I need to preprocess the same text in a different manners it sometimes become hard to traverse where and what I applied for a particular text. 
+A tiny library for personal usage. I really tired rewriting all functions each time when I need to preprocess some text. Ridicilous thing is that when I need to preprocess the same text in different manners it sometimes become hard to traverse where and what I applied for a particular text. 
 
-This code is intended to end up this by orginizing all kind of preprocess functions in understandble conveyrs. The basic idea is to represent all functions as process units and then convert it to manager that can guide the text through the user-defined sequence of units to process the text according to user needs. Moreover the manager has a representation string where the user can see the organization of units. It should be helpful when working in Jypiter Notebook.
+This code is intended to end up this by orginizing all kind of preprocess functions in understandble conveyr like structure. The basic idea is to represent all functions as process units with manager that can guide the text through the user-defined sequence of units to process the text according to user needs. Moreover the manager has a representation string where the user can see the organization of units. It should be helpful when working in Jypiter Notebook.
 
 # Usage
 
@@ -25,8 +25,9 @@ conv.start(["This text, is\n\n for test"], pool_size=5)
 
 # Extention
 
-The code is intended to be extendeble in order to collect as more functions as can be. In order to add function, you need to use an abstract class `ProcessUnit`. Also the next requarinments must be met:
+The code is intended to be extendeble in order to collect as more functions as can be. In order to add function, you need to use an abstract class `ProcessUnit` or `ParamProcessUnit` if your function has some parameters. Also the next requarinments must be met:
+
 * The function must do only one step
-* The name function must start with a verb
-* The function must have text representation (it's name should be enough)
+* The function name must start with a verb
+* The function must have a text representation (it's name should be enough)
 * The test for the function must be presented 
