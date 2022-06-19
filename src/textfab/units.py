@@ -8,6 +8,9 @@ from .base import ProcessUnit
 from .base import ParamProcessUnit
 
 class remove_punct(ProcessUnit):
+    """
+    Remove all punctuation that listed in a same named module.
+    """
     def process(self, text: str) -> str:
         return ''.join([x for x in text if x not in punctuation])
     
@@ -15,6 +18,9 @@ class remove_punct(ProcessUnit):
         return "remove_punct"
 
 class swap_enter_to_space(ProcessUnit):
+    """
+    Replace any \\n symbol on space
+    """
     def process(self, text: str) -> str:
         return text.replace("\n", ' ')
 
@@ -22,6 +28,9 @@ class swap_enter_to_space(ProcessUnit):
         return "swap_enter_to_space"
     
 class collapse_spaces(ProcessUnit):
+    """
+    Replace multiple spaces to one.
+    """
     def process(self, text: str) -> str:
         return re.sub(r"[ ]{2,}", " ", text)
     
@@ -29,6 +38,9 @@ class collapse_spaces(ProcessUnit):
         return "collapse_spaces"
 
 class lower_string(ProcessUnit):
+    '''
+    Make any string to low level
+    '''
     def process(self, text: str) -> str:
         return text.lower()
     
@@ -36,6 +48,9 @@ class lower_string(ProcessUnit):
         return "lower_string"
 
 class strip_string(ProcessUnit):
+    '''
+    Remove spaces at the beginning and at the end of the string
+    '''
     def process(self, text: str) -> str:
         return text.strip()
     
@@ -43,6 +58,9 @@ class strip_string(ProcessUnit):
         return "strip_string"
     
 class remove_latin(ProcessUnit):
+    """
+    Remove any latin characters in string
+    """
     def process(self, text:str) -> str:
         return re.sub("[A-Za-z]+", '', text)
     
@@ -50,6 +68,9 @@ class remove_latin(ProcessUnit):
         return "remove_latin"
     
 class remove_non_cyrillic(ProcessUnit):
+    """
+    Remove any non-cyrillic characters in string
+    """
     def process(self, text:str) -> str:
         return re.sub("[^А-Яа-я \-\,\.\;\:]+", '', text)
     
@@ -57,7 +78,9 @@ class remove_non_cyrillic(ProcessUnit):
         return "remove_non_cyrillic"
 
 class remove_custom_regex(ParamProcessUnit):
-    
+    """
+    Allows to define a custom regex for substitution
+    """
     def process(self, text: str) -> str:
         if len(self.param) > 1:
             raise ValueError(f"Too many parameterfs for {self.__str__()} unit")
@@ -67,6 +90,9 @@ class remove_custom_regex(ParamProcessUnit):
         return f"remove_custom_regex:{self.param}"
 
 class lemmatize_by_mystem(ProcessUnit):
+    """
+    Lemmatize all words in the string with pymystem3
+    """
     def __init__(self) -> None:
         self.stemmer = Mystem()
 
@@ -77,6 +103,9 @@ class lemmatize_by_mystem(ProcessUnit):
         return "lemmatize_by_mystem"
 
 class remove_emoji(ProcessUnit):
+    """
+    Remove all emojis from UTF-8
+    """
     def __init__(self):
         self.emoji_pattern = re.compile(u"(["                 # .* removed
                                     u"\U00010000-\U0001FFFF"
@@ -95,6 +124,9 @@ class remove_emoji(ProcessUnit):
         return "remove_emoji"
 
 class remove_accents(ProcessUnit):
+    """
+    Remove accent symbolо́
+    """
     def process(self, text: str) -> str:
         return ''.join(c for c in unicodedata.normalize('NFD', text)
                     if unicodedata.category(c) != 'Mn')

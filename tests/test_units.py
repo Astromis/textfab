@@ -50,4 +50,7 @@ def test_parralel_conv():
     assert conv.start(["This text, is\n\n for test", "This another text, is\n\n for test", "This yet another text, is\n\n for test"], pool_size=5) == ["This text is for test", "This another text is for test", "This yet another text is for test"]
 
 
-
+def test_param_units():
+    config = ["remove_punct", ("remove_custom_regex", "a")]
+    conv = Conveyer(config)
+    assert conv.start(["This is a test string."]) == ["This is  test string"] 

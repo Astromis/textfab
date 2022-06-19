@@ -1,5 +1,6 @@
 from . import units
 from multiprocessing import Pool
+from inspect import getmembers, isclass
 
 class Conveyer:
     def __init__(self, config:list):
@@ -30,3 +31,7 @@ class Conveyer:
     def __repr__(self) -> str:
         conv_structure = '->\n'.join([str(x) for x in self.conveyer])
         return f"Conveyer sequence:\n{conv_structure}\n"
+
+def see_available_units():
+    for name, obj in getmembers(units, isclass)[3:]:
+        print(name, obj.__doc__)

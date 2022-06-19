@@ -7,9 +7,15 @@ This code is intended to end up this by orginizing all kind of preprocess functi
 
 # Usage
 
-The available units can be found in `units.py` module. To create a conveyer, you just need to define the sequence of units:
+The available units can be found in `units.py` module. You can see available units and its functionality by next command
 ```python
-from text_conveyer.manager import Conveyer
+from textfab import see_available_units
+see_available_units()
+```
+
+To create a conveyer, you just need to define the sequence of units:
+```python
+from textfab import Conveyer
 
 config = ["swap_enter_to_space", "remove_punct", "collapse_spaces",]
 conv = Conveyer(config)
