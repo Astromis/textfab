@@ -6,6 +6,7 @@ from pymystem3 import Mystem
 
 from .base import ProcessUnit
 from .base import ParamProcessUnit
+from .base import ChangingProcessUnit
 
 class remove_punct(ProcessUnit):
     """
@@ -132,3 +133,17 @@ class remove_accents(ProcessUnit):
                     if unicodedata.category(c) != 'Mn')
     def __str__(self):
         return "remove_accents"
+
+class tokenize_with_emoji(ChangingProcessUnit):
+    """Tokenize text string with socnet specific objects like emoji or emoticons
+    """
+    def __init__(self) -> None:
+        super().__init__()
+        from .emoji_tokenizer import tokenize
+        self.tokenize = tokenize
+
+    def process(self, text: str) -> list:
+        return self.tokenize(text)
+
+    def __str__(self,):
+        return "tokenizer_with_emoji"

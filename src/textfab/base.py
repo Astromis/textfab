@@ -10,6 +10,12 @@ class ProcessUnit(metaclass=ABCMeta):
     def __str__(self):
         pass
 
+class ChangingProcessUnit(ProcessUnit):
+    
+    @abstractmethod
+    def process(self, text: str) -> None:
+        ...
+
 class ParamProcessUnit(ProcessUnit):
     
     def __init__(self, param) -> None:

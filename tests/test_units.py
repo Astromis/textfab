@@ -1,5 +1,5 @@
-from textfab.units import *
-from textfab.manager import Conveyer
+from src.textfab.units import *
+from src.textfab.manager import Conveyer
 
 class TestUnits:
 
@@ -38,6 +38,10 @@ class TestUnits:
     def test_remove_accents(self):
         unit = remove_accents()
         assert unit.process("Модерниза́ция") == 'Модернизация'
+
+    def test_emoji_tokenizer(self):
+        unit = tokenize_with_emoji()
+        assert unit.process("Привет!😀 Как дела?") == ["Привет", "!", "😀", "Как", "дела", "?"]
 
 def test_conv():
     config = ["swap_enter_to_space", "remove_punct", "collapse_spaces",]
