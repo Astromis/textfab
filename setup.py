@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="textfab",
-    version="0.1.0",
+    version="0.2.0",
     author="Igor Buyanov",
     author_email="buyanov.igor.o@yandex.ru",
     description="A tiny library for text preprocessing in NLP",
