@@ -16,8 +16,14 @@ class ChangingProcessUnit(ProcessUnit):
     def process(self, text: str) -> None:
         ...
 
+class ParamChangingProcessUnit(ChangingProcessUnit):
+    
+    def __init__(self, param: list) -> None:
+        super().__init__()
+        self.param = param
+
 class ParamProcessUnit(ProcessUnit):
     
-    def __init__(self, param) -> None:
+    def __init__(self, param: list) -> None:
         super().__init__()
         self.param = param

@@ -1,4 +1,5 @@
 import re
+from typing import List
 import unicodedata
 
 from string import punctuation 
@@ -7,6 +8,7 @@ from pymystem3 import Mystem
 from .base import ProcessUnit
 from .base import ParamProcessUnit
 from .base import ChangingProcessUnit
+from .base import ParamChangingProcessUnit
 
 class remove_punct(ProcessUnit):
     """
@@ -142,8 +144,38 @@ class tokenize_with_emoji(ChangingProcessUnit):
         from .emoji_tokenizer import tokenize
         self.tokenize = tokenize
 
-    def process(self, text: str) -> list:
+    def process(self, text: str) -> List[str]:
         return self.tokenize(text)
 
     def __str__(self,):
         return "tokenizer_with_emoji"
+
+class tokenize_with_nltk(ChangingProcessUnit):
+    """Tokenize text with nltk.word_tokenize
+    """
+    def __init__(self) -> None:
+        super().__init__()
+        from nltk import word_tokenize
+        self.tokenize = word_tokenize
+    
+    def process(self, text: str) -> List[str]:
+        return self.tokenize(text)
+
+    def __str__(self,):
+        return "tokenize_with_nltk"
+
+class segment_by_sentences(ParamChangingProcessUnit):
+    """Segment text by the sentences with nltk.sent_tokenize
+    """
+    def __init__(self, param) -> None:
+        """
+        Args:
+            param (str): language parameter for sent_tokenize
+        """
+        super().__init__(param)
+        self.param = param
+        from nltk import sent_tokenize
+        self.tokenize = sent_tokenize
+
+    def process(self, text: str) -> List[str]:
+        return self.tokenize(text, *self.param)
