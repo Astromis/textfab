@@ -3,7 +3,6 @@ from typing import List
 import unicodedata
 
 from string import punctuation 
-from pymystem3 import Mystem
 
 from .base import ProcessUnit
 from .base import ParamProcessUnit
@@ -97,6 +96,7 @@ class lemmatize_by_mystem(ProcessUnit):
     Lemmatize all words in the string with pymystem3
     """
     def __init__(self) -> None:
+        from pymystem3 import Mystem
         self.stemmer = Mystem()
 
     def process(self, text: str) -> str:
