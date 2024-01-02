@@ -179,3 +179,22 @@ class segment_by_sentences(ParamChangingProcessUnit):
 
     def process(self, text: str) -> List[str]:
         return self.tokenize(text, *self.param)
+    
+class remove_links(ProcessUnit):
+    """Remove any links from text."""
+    def __init__(self) -> None:
+        super().__init__()
+        self.link_regex = re.compile("(https?://)?([\da-z.-]+).([a-z.]{2,6})([/\w.-?&\-\#]*)")
+
+    def process(self, text: str) -> str:
+        return self.link_regex.sub("", text)
+        
+class remove_mobile_phone_numbers(ProcessUnit):
+    """Remove mobile phone numbers from text."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.phone_number_regex = re.compile("^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$")
+
+    def process(self, text: str) -> str:
+        return self.phone_number_regex.sub("", text)

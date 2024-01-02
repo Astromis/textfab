@@ -55,6 +55,15 @@ class TestUnits:
         использованием элективной среды МКД, содержащей в качестве единственного источника углерода дизельное топливо, нефть, фенол в конечной концентрации 0.1% .'''
         assert unit.process(text) == ['<pa>Анализ численности КГМ проводили чашечным методом Коха, на среде СММ (среда для морских микроорганизмов) .', 'БГКП обнаруживали с использованием селективной среды Эндо.', 'Определяли каталазоположительные, оксидазоотрицательные, грамотрицательные бактерии .', 'Наиболее вероятное количество бактерий отдельных физиологических групп – НО, ФД, ДТ оценивали на основе метода предельных разведений с \n        использованием элективной среды МКД, содержащей в качестве единственного источника углерода дизельное топливо, нефть, фенол в конечной концентрации 0.1% .']
 
+    def test_remove_links(self):
+        unit = remove_links()
+        text = "привет. подпишись на https://github.com/Astromis/textfab/issues/10 и еще сюда https://www.google.com/search?q=dsf&sca_esv=595131700&source=hp&ei=S1KUZabvG4_BwPAP0dOHkAo&iflsig=AO6bgOgAAAAAZZRgWymwyPoYTEAdamM1XaAgdt6BMs60&ved=0ahUKEwjmwN-lp7-DAxWPIBAIHdHpAaIQ4dUDCAk&uact=5&oq=dsf&gs_lp=Egdnd3Mtd2l6IgNkc2YyCBAAGIAEGLEDMgUQLhiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESLwCUABYGHAAeACQAQCYAaMBoAG2AqoBAzIuMbgBA8gBAPgBAcICERAuGIAEGLEDGIMBGMcBGNEDwgILEAAYgAQYsQMYgwHCAggQLhiABBixA8ICBBAAGAPCAhcQLhiABBiKBRixAxiDARjHARivARiOBcICDhAuGIAEGLEDGMcBGNED&sclient=gws-wiz"
+        assert unit.process(text) == "привет. подпишись на  и еще сюда "
+
+    def test_remove_mobile_phone_numbers(self):
+        unit = remove_mobile_phone_numbers()
+        text = """89103123167|+7-910-221-22-22|+7(910)-221-22-22"""
+        assert all([unit.process(x).strip() == "" for x in text.split("|")])
 
 def test_conv():
     config = ["swap_enter_to_space", "remove_punct", "collapse_spaces",]
