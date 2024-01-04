@@ -70,6 +70,26 @@ class TestUnits:
         text = ["part", "one", "part", "two"]
         assert "part one part two" == unit.process(text)
 
+    def test_apply_butter_finger(self):
+        unit = apply_butter_finger({"prob_token_pass":0.5, "seed":43})
+        text = ["это", "тестовый", "набор", "для", "аугментаций"]
+        assert ['это', 'тестовай', 'набон', 'дтя', 'аугментаций'] == unit.process(text)
+
+    def test_apply_changing_token_char_case(self):
+        unit = apply_changing_token_char_case({"try_numbers":1, "seed":42})
+        text = ["это", "тестовый", "набор", "для", "аугментаций"]
+        assert ['Это', 'теСтОвыЙ', 'набор', 'для', 'ауГМентаций'] == unit.process(text)
+
+    def test_apply_apply_random_token_deletion(self):
+        unit = apply_random_token_deletion({"try_numbers": 2, "seed": 43})
+        text = ["это", "тестовый", "набор", "для", "аугментаций"]
+        assert ['тестовый', 'набор', 'для'] == unit.process(text)
+    
+    def test_apply_random_token_swap(self):
+        unit = apply_random_token_swap({"try_numbers": 1, "seed": 44})
+        text = ["это", "тестовый", "набор", "для", "аугментаций"]
+        assert ['это', 'тестовый', 'набор', 'аугментаций', 'для'] == unit.process(text)
+
 def test_conv():
     config = ["swap_enter_to_space", "remove_punct", "collapse_spaces",]
     conv = Fabric(config)

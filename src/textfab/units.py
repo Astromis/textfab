@@ -9,6 +9,8 @@ from .base import ParamProcessUnit
 from .base import ChangingProcessUnit
 from .base import ParamChangingProcessUnit
 
+from .augmentations import butter_finger, random_swap, random_deletion, change_char_case
+
 
 class remove_punct(ProcessUnit):
     """
@@ -170,8 +172,7 @@ class remove_accents(ProcessUnit):
 
 
 class tokenize_with_emoji(ChangingProcessUnit):
-    """Tokenize text string with socnet specific objects like emoji or emoticons
-    """
+    """Tokenize text string with socnet specific objects like emoji or emoticons"""
 
     def __init__(self) -> None:
         super().__init__()
@@ -187,8 +188,7 @@ class tokenize_with_emoji(ChangingProcessUnit):
 
 
 class tokenize_with_nltk(ChangingProcessUnit):
-    """Tokenize text with nltk.word_tokenize
-    """
+    """Tokenize text with nltk.word_tokenize"""
 
     def __init__(self) -> None:
         super().__init__()
@@ -201,17 +201,20 @@ class tokenize_with_nltk(ChangingProcessUnit):
 
     def __str__(self,):
         return "tokenize_with_nltk"
-    
+
+
 class detokenize_with_space(ChangingProcessUnit):
     """Connect the parts with the space."""
 
-    def process(self, text: List[Any]) -> Any:
+    def process(self, text: List[str]) -> str:
         return " ".join(text)
+
+    def __str__(self) -> str:
+        return "detokenize_with_space"
 
 
 class segment_by_sentences(ParamChangingProcessUnit):
-    """Segment text by the sentences with nltk.sent_tokenize
-    """
+    """Segment text by the sentences with nltk.sent_tokenize"""
 
     def __init__(self, param) -> None:
         """
@@ -227,6 +230,9 @@ class segment_by_sentences(ParamChangingProcessUnit):
     def process(self, text: str) -> List[str]:
         return self.tokenize(text, **self.param)
 
+    def __str__(self) -> str:
+        return "segment_by_sentences"
+
 
 class remove_links(ProcessUnit):
     """Remove any links from text."""
@@ -240,6 +246,9 @@ class remove_links(ProcessUnit):
     def process(self, text: str) -> str:
         return self.link_regex.sub("", text)
 
+    def __str__(self) -> str:
+        return "remove_links"
+
 
 class remove_mobile_phone_numbers(ProcessUnit):
     """Remove mobile phone numbers from text."""
@@ -252,4 +261,46 @@ class remove_mobile_phone_numbers(ProcessUnit):
 
     def process(self, text: str) -> str:
         return self.phone_number_regex.sub("", text)
-    
+
+    def __str__(self) -> str:
+        return "remove_mobile_phone_numbers"
+
+
+class apply_butter_finger(ParamProcessUnit):
+    """Apply the butter fingers augmentation to tokenized text."""
+
+    def process(self, text: List[str]) -> List[str]:
+        return butter_finger(text, **self.param)
+
+    def __str__(self) -> str:
+        return "apply_butter_finger"
+
+
+class apply_random_token_swap(ParamProcessUnit):
+    """Apply the random token swap augmentation to tokenized text."""
+
+    def process(self, text: List[str]) -> List[str]:
+        return random_swap(text, **self.param)
+
+    def __str__(self) -> str:
+        return "apply_random_token_swap"
+
+
+class apply_random_token_deletion(ParamChangingProcessUnit):
+    """Apply the random token deletion augmentation to tokenized text."""
+
+    def process(self, text: List[str]) -> List[str]:
+        return random_deletion(text, **self.param)
+
+    def __str__(self) -> str:
+        return "apply_random_token_deletion"
+
+
+class apply_changing_token_char_case(ParamProcessUnit):
+    """Apply the changing token char case augmentation to tokenized text."""
+
+    def process(self, text: List[str]) -> List[str]:
+        return change_char_case(text, **self.param)
+
+    def __str__(self) -> str:
+        return "apply_changing_token_char_case"
