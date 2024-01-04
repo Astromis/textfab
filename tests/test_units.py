@@ -24,7 +24,7 @@ class TestUnits:
         assert unit.process("Теst #2 для renive не cyrillic") == "Те  для  не "
 
     def test_remove_custom_regex(self):
-        unit = remove_custom_regex(["[0-9]+"])
+        unit = remove_custom_regex({"regex":"[0-9]+"})
         assert unit.process("This is 1st text since 1343 . It contains 323 signs") == "This is st text since  . It contains  signs"
 
     def test_lemmatize_by_mystem(self):
@@ -48,7 +48,7 @@ class TestUnits:
         assert unit.process("Привет! Как дела?") == ['Привет', '!', 'Как', 'дела', '?']
 
     def test_segment_by_sentences(self):
-        unit = segment_by_sentences(['russian'])
+        unit = segment_by_sentences({"language": 'russian'})
         text = '''<pa>Анализ численности КГМ проводили чашечным методом Коха, на среде СММ (среда для морских микроорганизмов) . 
         БГКП обнаруживали с использованием селективной среды Эндо. Определяли каталазоположительные, оксидазоотрицательные, грамотрицательные бактерии .  
         Наиболее вероятное количество бактерий отдельных физиологических групп – НО, ФД, ДТ оценивали на основе метода предельных разведений с 
@@ -77,6 +77,6 @@ def test_parralel_conv():
 
 
 def test_param_units():
-    config = ["remove_punct", ("remove_custom_regex", "a")]
+    config = ["remove_punct", {"remove_custom_regex": {"regex": "a"}}]
     conv = Conveyer(config)
     assert conv.start(["This is a test string."]) == ["This is  test string"] 

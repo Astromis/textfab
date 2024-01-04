@@ -10,8 +10,10 @@ class Conveyer:
         for u in config:
             if isinstance(u, str):
                 self.conveyer.append(getattr(units, u)())
-            elif isinstance(u, tuple):
-                self.conveyer.append(getattr(units, u[0])(*u[1:]))
+            elif isinstance(u, dict):
+                unit_name = list(u.keys())[0]
+                arguments = list(u.values())[0]
+                self.conveyer.append(getattr(units, unit_name)(arguments))
             else:
                 raise ValueError("Unknown type of unit")
 

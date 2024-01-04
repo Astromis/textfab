@@ -82,11 +82,15 @@ class remove_non_cyrillic(ProcessUnit):
 class remove_custom_regex(ParamProcessUnit):
     """
     Allows to define a custom regex for substitution
+
+    Params:
+        regex (str): The regex string to be removed.
     """
     def process(self, text: str) -> str:
+        print(self.param)
         if len(self.param) > 1:
-            raise ValueError(f"Too many parameterfs for {self.__str__()} unit")
-        return re.sub(*self.param, "", text)
+            raise ValueError(f"Too many parameters for {self.__str__()} unit")
+        return re.sub(self.param["regex"], "", text)
 
     def __str__(self):
         return f"remove_custom_regex:{self.param}"
@@ -178,7 +182,7 @@ class segment_by_sentences(ParamChangingProcessUnit):
         self.tokenize = sent_tokenize
 
     def process(self, text: str) -> List[str]:
-        return self.tokenize(text, *self.param)
+        return self.tokenize(text, **self.param)
     
 class remove_links(ProcessUnit):
     """Remove any links from text."""
