@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Union, List
 from abc import abstractmethod, ABCMeta
 
 
@@ -22,7 +22,7 @@ class ChangingProcessUnit(ProcessUnit):
     """
 
     @abstractmethod
-    def process(self, text: str) -> Any:
+    def process(self, text: Union[str, List[str], Any]) -> Any:
         ...
 
 

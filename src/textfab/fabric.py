@@ -4,6 +4,7 @@ from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
 from omegaconf import OmegaConf
 
+
 class Fabric:
     def __init__(self, config: list):
         self.conveyer = []
@@ -40,7 +41,7 @@ class Fabric:
     def __repr__(self) -> str:
         conv_structure = "->\n".join([str(x) for x in self.conveyer])
         return f"Conveyer sequence:\n{conv_structure}\n"
-    
+
     @classmethod
     def from_config(cls, cfg_path: str):
         conf = OmegaConf.load(cfg_path)
