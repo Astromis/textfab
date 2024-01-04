@@ -1,7 +1,7 @@
 from . import units
 from multiprocessing import Pool
 
-class Conveyer:
+class Fabric:
     def __init__(self, config:list):
         self.conveyer = []
         if not isinstance(config, list):
