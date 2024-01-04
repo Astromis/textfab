@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import Any, List
 import unicodedata
 
 from string import punctuation
@@ -201,6 +201,12 @@ class tokenize_with_nltk(ChangingProcessUnit):
 
     def __str__(self,):
         return "tokenize_with_nltk"
+    
+class detokenize_with_space(ChangingProcessUnit):
+    """Connect the parts with the space."""
+
+    def process(self, text: List[Any]) -> Any:
+        return " ".join(text)
 
 
 class segment_by_sentences(ParamChangingProcessUnit):

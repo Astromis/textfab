@@ -65,18 +65,23 @@ class TestUnits:
         text = """89103123167|+7-910-221-22-22|+7(910)-221-22-22"""
         assert all([unit.process(x).strip() == "" for x in text.split("|")])
 
+    def test_detokenize_with_space(self):
+        unit = detokenize_with_space()
+        text = ["part", "one", "part", "two"]
+        assert "part one part two" == unit.process(text)
+
 def test_conv():
     config = ["swap_enter_to_space", "remove_punct", "collapse_spaces",]
     conv = Fabric(config)
-    assert conv.start(["This text, is\n\n for test"]) == ["This text is for test"]
+    assert conv(["This text, is\n\n for test"]) == ["This text is for test"]
 
 def test_parralel_conv():
     config = ["swap_enter_to_space", "remove_punct", "collapse_spaces",]
     conv = Fabric(config, )
-    assert conv.start(["This text, is\n\n for test", "This another text, is\n\n for test", "This yet another text, is\n\n for test"], pool_size=5) == ["This text is for test", "This another text is for test", "This yet another text is for test"]
+    assert conv(["This text, is\n\n for test", "This another text, is\n\n for test", "This yet another text, is\n\n for test"], pool_size=5) == ["This text is for test", "This another text is for test", "This yet another text is for test"]
 
 
 def test_param_units():
     config = ["remove_punct", {"remove_custom_regex": {"regex": "a"}}]
     conv = Fabric(config)
-    assert conv.start(["This is a test string."]) == ["This is  test string"] 
+    assert conv(["This is a test string."]) == ["This is  test string"] 
