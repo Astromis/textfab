@@ -20,18 +20,20 @@ class Fabric:
 
     def _process(self, text:str):
         for u in self.conveyer:
-            #texts = list(map(lambda x: u.process(x), texts))
             text = u.process(text)
         return text
     
-    def start(self, texts:list, pool_size=None):
-        if pool_size != None:
+    def __call__(self, texts:list, ensure_amount_integrity=True, pool_size=None):
+        source_text_amount = len(texts)
+        if pool_size is not None:
             with Pool(pool_size) as p:
-                return p.map(self._process, texts)
+                processed_texts = p.map(self._process, texts)
         else:
-            return list(map(lambda x: self._process(x), texts))
+            processed_texts = list(map(lambda x: self._process(x), texts))
+        if ensure_amount_integrity and len(processed_texts) != source_text_amount:
+            raise ValueError("Text amount integrity  violated: the source text amount doesn't match with processed text.")
+        return processed_texts
 
     def __repr__(self) -> str:
         conv_structure = '->\n'.join([str(x) for x in self.conveyer])
         return f"Conveyer sequence:\n{conv_structure}\n"
-
