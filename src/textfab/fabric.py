@@ -1,4 +1,5 @@
 from . import units
+from .base import ProcessUnit
 from multiprocessing import Pool
 from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
@@ -17,6 +18,8 @@ class Fabric:
                 unit_name = list(u.keys())[0]
                 arguments = list(u.values())[0]
                 self.conveyer.append(getattr(units, unit_name)(arguments))
+            elif isinstance(u, ProcessUnit):
+                self.conveyer.append(u)
             else:
                 raise ValueError("Unknown type of unit")
 
