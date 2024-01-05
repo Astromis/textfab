@@ -3,9 +3,6 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = fh.read().split("\n")
-
 setuptools.setup(
     name="textfab",
     version="1.0.0",
@@ -25,6 +22,8 @@ setuptools.setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
-    install_requires=requirements,
+    install_requires=["pymystem3>=0.2.0",
+                      "nltk>=3.6.7",
+                      "omegaconf>=2.3.0"],
     include_package_data=True,
 )
