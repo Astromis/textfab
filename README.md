@@ -5,6 +5,12 @@ I really tired rewriting all functions each time when I need to preprocess some 
 
 This code is intended to end up this by organizing all kind of preprocess or augmenting functions in understandable conveyer-like structure. The basic idea is to represent all functions as process units with manager that can guide the text through the user-defined sequence of units to process the text according to user needs. Moreover the manager has a representation string where the user can see the organization of units. It should be helpful when working in Jupiter Notebook.
 
+# Installation
+
+```bash
+pip install textfab
+```
+
 # Usage
 
 The basic block of the `textfab` is units that does the work. The available units can be found in `units.py` module of by calling the next function:
