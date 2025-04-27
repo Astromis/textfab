@@ -4,6 +4,7 @@ from multiprocessing import Pool
 from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
 from omegaconf import OmegaConf
+import importlib
 
 
 class Fabric:
@@ -13,15 +14,26 @@ class Fabric:
             raise ValueError("The config is not a list")
         for u in config:
             if isinstance(u, str):
-                self.conveyer.append(getattr(units, u)())
+                if "." in u:
+                    path = u.split(".")
+                    u = getattr(importlib.import_module(".".join(path[:-1])), path[-1])
+                    self.conveyer.append(u())
+                else:
+                    self.conveyer.append(getattr(units, u)())
             elif isinstance(u, dict) or isinstance(u, DictConfig):
                 unit_name = list(u.keys())[0]
                 arguments = list(u.values())[0]
-                self.conveyer.append(getattr(units, unit_name)(arguments))
+                if "." in unit_name:
+                    path = unit_name.split(".")
+                    unit_name = getattr(importlib.import_module(".".join(path[:-1])), path[-1])
+                    self.conveyer.append(unit_name(arguments))
+                else:
+                    self.conveyer.append(getattr(units, unit_name)(arguments))
             elif isinstance(u, ProcessUnit):
                 self.conveyer.append(u)
             else:
                 raise ValueError("Unknown type of unit")
+
 
     def _process(self, text: str):
         for u in self.conveyer:
