@@ -1,5 +1,5 @@
 from . import units
-from .base import ProcessUnit
+from .base import ProcessUnit, ParamChangingProcessUnit, ParamProcessUnit
 from multiprocessing import Pool
 from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
@@ -58,6 +58,24 @@ class Fabric:
         return f"Conveyer sequence:\n{conv_structure}\n"
 
     @classmethod
-    def from_config(cls, cfg_path: str):
+    def load_from_config(cls, cfg_path: str):
         conf = OmegaConf.load(cfg_path)
         return cls(conf)
+    
+    def save_to_config(self, cfg_path: str):
+        conf_list = []
+        for u in self.conveyer:
+            module = u.__class__.__module__
+            if module.startswith("textfab."):
+                if isinstance(u, ParamChangingProcessUnit) or isinstance(u, ParamProcessUnit):
+                    conf_list.append({u.__class__.__name__: u.param})
+                else:
+                    conf_list.append(u.__class__.__name__)
+            else:
+                if isinstance(u, ParamChangingProcessUnit) or isinstance(u, ParamProcessUnit):
+                    conf_list.append({f"{u.__class__.__module__}.{u.__class__.__name__}": u.param})
+                else:
+                    conf_list.append(f"{u.__class__.__module__}.{u.__class__.__name__}")
+        conf_list = OmegaConf.create(conf_list)
+        with open(cfg_path, 'w') as f:
+            OmegaConf.save(conf_list, f)
