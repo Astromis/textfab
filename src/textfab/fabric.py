@@ -5,7 +5,7 @@ from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
 from omegaconf import OmegaConf
 import importlib
-
+import pandas as pd
 
 class Fabric:
     def __init__(self, config: list):
@@ -40,7 +40,13 @@ class Fabric:
             text = u.process(text)
         return text
 
-    def __call__(self, texts: list, ensure_amount_integrity=True, pool_size=None):
+    def __call__(self, texts: str | list | pd.Series, ensure_amount_integrity=True, pool_size=None):
+        if isinstance(texts, str):
+            texts = [texts]
+        elif isinstance(texts, pd.Series):
+            texts = texts.to_list()
+        else:
+            pass
         source_text_amount = len(texts)
         if pool_size is not None:
             with Pool(pool_size) as p:
