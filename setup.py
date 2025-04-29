@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="textfab",
-    version="1.0.0",
+    version="1.1.0",
     author="Igor Buyanov",
     author_email="buyanov.igor.o@yandex.ru",
     description="A tiny library for text preprocessing in NLP",
@@ -24,6 +24,7 @@ setuptools.setup(
     python_requires=">=3.6",
     install_requires=["pymystem3>=0.2.0",
                       "nltk>=3.6.7",
-                      "omegaconf>=2.3.0"],
+                      "omegaconf>=2.3.0",
+                      "pandas>=1.3.4"],
     include_package_data=True,
 )
