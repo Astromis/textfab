@@ -84,16 +84,16 @@ class remove_latin(ProcessUnit):
         return "remove_latin"
 
 
-class remove_non_cyrillic(ProcessUnit):
+class remove_non_rus_alphabet(ProcessUnit):
     """
     Remove any non-cyrillic characters in string
     """
 
     def process(self, text: str) -> str:
-        return re.sub("[^А-Яа-я \-\,\.\;\:]+", "", text)
+        return re.sub("[^А-Яа-яё \-\,\.\;\:]+", "", text)
 
     def __str__(self):
-        return "remove_non_cyrillic"
+        return "remove_non_rus_alphabet"
 
 
 class remove_custom_regex(ParamProcessUnit):

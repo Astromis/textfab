@@ -22,8 +22,8 @@ class TestUnits:
             == "Переменные могут быть  или "
         )
 
-    def test_remove_non_cyrillic(self):
-        unit = remove_non_cyrillic()
+    def test_remove_non_rus_alphabet(self):
+        unit = remove_non_rus_alphabet()
         assert unit.process("Теst #2 для renive не cyrillic") == "Те  для  не "
 
     def test_remove_custom_regex(self):
