@@ -107,7 +107,7 @@ def butter_finger(
 
 def random_deletion(
     text: List[str],
-    p: float = 0.1,
+    prob: float = 0.1,
     try_numbers: int = 1,
     stop_words: Optional[List[str]] = [],
     seed: int = None,
@@ -119,7 +119,7 @@ def random_deletion(
     ----------
     text: List[str]
         list of tokens in the sentence
-    p: float
+    prob: float
         probability of the deletion
     try_numbers: int
         how much the transformation is applied (default is 1)
@@ -148,7 +148,7 @@ def random_deletion(
                 new_words.append(word)
                 continue
             r = random.uniform(0, 1)
-            if r > p:
+            if r > prob:
                 new_words.append(word)
         words_copy = deepcopy(new_words)
 
